@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget BrandName() {
+Widget brandName() {
   return const Row(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
-      Text("Wall"),
-      Text("Bee"),
+      Text("Wall", style: TextStyle(color: Colors.black87)),
+      Text("Bee", style: TextStyle(color: Colors.blue)),
     ],
   );
 }
