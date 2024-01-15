@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wallbee/data/data.dart';
 import 'package:wallbee/widgets/widget.dart';
 
 class Home extends StatefulWidget {
@@ -9,6 +10,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<CategorieModel> categories = new List();
+  @override
+  void initState() {
+    categories = getCategories();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,35 +26,56 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xfff5f8fd),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 24),
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: TextField(
-              controller: searchController,
-              decoration: const InputDecoration(
-                  hintText: "search wallpapers", border: InputBorder.none),
-            )),
-            InkWell(
-                onTap: () {
-                  if (searchController.text != "") {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchView(
-                                  search: searchController.text,
-                                )));
-                  }
-                },
-                child: Container(child: const Icon(Icons.search)))
-          ],
-        ),
+        child: Column(children: [
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xfff5f8fd),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            child: const Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "search wallpaper", border: InputBorder.none),
+                  ),
+                ),
+                Icon(Icons.search),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          )
+          ListView.builder(itemCount: categories.length,shrinkWrap: true, itemBuilder:(context,index) {
+            return CategoriesTile(
+              title: categories[index].categorieName,
+              imgUrl: categories[index].imgUrl,
+            );
+          })
+        ]),
       ),
+    );
+  }
+}
+
+class CategoriesTile extends StatelessWidget {
+  final imgUrl, title;
+  CategoriesTile({@required this.title,@required this.imgUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(children: [
+        Container(
+          child: Image.network(imgUrl),
+        ),
+        Container(
+          child: Text(title),
+        )
+      ]),
     );
   }
 }
