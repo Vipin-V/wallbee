@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallbee/views/home.dart';
+import 'package:wallbee/views/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: const Home(),
+      home: const HomeScreen(),
     );
   }
 }
